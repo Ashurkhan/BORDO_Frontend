@@ -41,7 +41,7 @@ export const Register = () => {
   const handleOAuthRegister = () => {
     const backendBase =
       import.meta.env.VITE_BACKEND_BASE_URL ||
-      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'http://localhost:8080');
+      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'https://bordo-production.up.railway.app');
     window.location.href = `${backendBase}/oauth2/authorization/google`;
   };
 
