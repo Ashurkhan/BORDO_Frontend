@@ -31,14 +31,7 @@ export const Favorites = () => {
     }
   };
 
-  const handleRemoveFavorite = async (adId: number) => {
-    try {
-      await favoritesAPI.removeFavorite(adId);
-      setFavorites(favorites.filter(ad => ad.id !== adId));
-    } catch (err) {
-      console.error('Ошибка удаления из избранного:', err);
-    }
-  };
+
 
   return (
     <div className="favorites-page">

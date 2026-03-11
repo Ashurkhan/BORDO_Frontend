@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { chatAPI } from '../services/api';
 import '../styles/Header.css';
@@ -70,21 +70,21 @@ export const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="logo" onClick={() => navigate('/')}>
+        <Link to="/" className="logo">
           <h1>🐄 Bordo</h1>
           <p>Интернет-магазин скота</p>
-        </div>
+        </Link>
 
         <nav className="nav-menu">
-          <a href="/" className="nav-link">Каталог</a>
+          <Link to="/" className="nav-link">Каталог</Link>
           {isAuthenticated && (
             <>
-              <a href="/ads/create" className="nav-link">➕ Объявление</a>
-              <a href="/favorites" className="nav-link">❤️ Избранное {favCount > 0 ? `(${favCount})` : ''}</a>
-              <a href="/chats" className="nav-link">
+              <Link to="/ads/create" className="nav-link">➕ Объявление</Link>
+              <Link to="/favorites" className="nav-link">❤️ Избранное {favCount > 0 ? `(${favCount})` : ''}</Link>
+              <Link to="/chats" className="nav-link">
                 💬 Сообщения {unreadCount > 0 && <span className="header-unread-badge">{unreadCount}</span>}
-              </a>
-              <a href="/profile" className="nav-link">👤 Профиль</a>
+              </Link>
+              <Link to="/profile" className="nav-link">👤 Профиль</Link>
             </>
           )}
         </nav>

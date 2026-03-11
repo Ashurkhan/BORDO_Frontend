@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Footer = () => {
   return (
     <footer className="footer">
@@ -10,9 +12,9 @@ export const Footer = () => {
         <div className="footer-section">
           <h4>Навигация</h4>
           <ul>
-            <li><a href="/">Каталог</a></li>
-            <li><a href="/favorites">Избранное</a></li>
-            <li><a href="/profile">Профиль</a></li>
+            <li><Link to="/">Каталог</Link></li>
+            <li><Link to="/favorites">Избранное</Link></li>
+            <li><Link to="/profile">Профиль</Link></li>
           </ul>
         </div>
 

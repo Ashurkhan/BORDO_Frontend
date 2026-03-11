@@ -33,6 +33,11 @@ export interface JwtAuthenticationDto {
   refreshToken: string;
 }
 
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
 // UserResponse - ответ signUp (только данные юзера, без токенов)
 export type UserStatus = string;
 export type UserRole = string;

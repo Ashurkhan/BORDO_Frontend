@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adsAPI, categoriesAPI, favoritesAPI, votesAPI } from '../services/api';
-import { useAuth } from '../context/AuthContext';
+import { adsAPI, categoriesAPI, votesAPI } from '../services/api';
+
 import type { Ad, Category } from '../types';
 import '../styles/Ads.css';
 
@@ -13,35 +13,17 @@ export const AdsList = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [favorites, setFavorites] = useState<Set<number>>(new Set());
-  const [likesCount, setLikesCount] = useState<Record<number, number>>({});
-  const [inFlightLikes, setInFlightLikes] = useState<Set<number>>(new Set());
   const [viewsCount, setViewsCount] = useState<Record<number, number>>({});
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+
 
   useEffect(() => {
     loadCategories();
     loadAds();
   }, []);
 
-  useEffect(() => {
-    // when auth state changes, load user's favorites
-    if (isAuthenticated) {
-      (async () => {
-        try {
-          const res = await favoritesAPI.list();
-          const favSet = new Set<number>((res.data || []).map((a: any) => a.id));
-          setFavorites(favSet);
-        } catch (err) {
-          console.warn('Не удалось загрузить избранное', err);
-        }
-      })();
-    } else {
-      setFavorites(new Set());
-    }
-  }, [isAuthenticated]);
+
 
   useEffect(() => {
     loadAds();
@@ -79,13 +61,10 @@ export const AdsList = () => {
             .then(res => ({ id: a.id, views: res.data ?? 0 }))
             .catch(() => ({ id: a.id, views: 0 }))
         );
-        const [likeResults, viewResults] = await Promise.all([
+        const [_, viewResults] = await Promise.all([
           Promise.all(likePromises),
           Promise.all(viewPromises),
         ]);
-        const likeCounts: Record<number, number> = {};
-        likeResults.forEach((r) => { likeCounts[r.id] = r.likes; });
-        setLikesCount(likeCounts);
         const viewCounts: Record<number, number> = {};
         viewResults.forEach((r) => { viewCounts[r.id] = r.views; });
         setViewsCount(viewCounts);
@@ -104,50 +83,7 @@ export const AdsList = () => {
     navigate(`/ads/${adId}`);
   };
 
-  const handleToggleFavorite = async (e: React.MouseEvent, adId: number) => {
-    e.stopPropagation();
 
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-
-    try {
-      const isFav = favorites.has(adId);
-      if (isFav) {
-        await favoritesAPI.removeFavorite(adId);
-        setFavorites(prev => { const s = new Set(prev); s.delete(adId); return s; });
-      } else {
-        await favoritesAPI.addFavorite(adId);
-        setFavorites(prev => { const s = new Set(prev); s.add(adId); return s; });
-      }
-      try { window.dispatchEvent(new CustomEvent('favorites:update')); } catch {}
-    } catch (err) {
-      console.error('Ошибка при работе с избранным:', err);
-    }
-  };
-
-  const handleToggleLike = async (e: React.MouseEvent, adId: number) => {
-    e.stopPropagation();
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-    if (inFlightLikes.has(adId)) return;
-    setInFlightLikes(prev => { const s = new Set(prev); s.add(adId); return s; });
-    try {
-        // simply send like request and refresh count
-      await votesAPI.vote({ adId, type: 'LIKE' });
-      try {
-        const cnt = await votesAPI.getCounts(adId);
-        setLikesCount(prev => ({ ...prev, [adId]: cnt.data.likes || 0 }));
-      } catch {}
-    } catch (err) {
-      console.error('Ошибка при голосе:', err);
-    } finally {
-      setInFlightLikes(prev => { const s = new Set(prev); s.delete(adId); return s; });
-    }
-  };
 
   return (
     <div className="ads-page">

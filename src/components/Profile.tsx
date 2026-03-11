@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adsAPI } from '../services/api';
-import { favoritesAPI, votesAPI } from '../services/api';
+import { favoritesAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import type { Ad } from '../types';
 import '../styles/Profile.css';
@@ -11,8 +11,7 @@ export const Profile = () => {
   const [userAds, setUserAds] = useState<Ad[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [favorites, setFavorites] = useState<Ad[]>([]);
-  const [likedAds, setLikedAds] = useState<Ad[]>([]);
-  const [activeTab, setActiveTab] = useState<'info' | 'ads' | 'favorites' | 'likes'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'ads' | 'favorites'>('info');
   const navigate = useNavigate();
   const [phoneInput, setPhoneInput] = useState<string>(user?.phone || '');
   const [isSavingPhone, setIsSavingPhone] = useState(false);
@@ -257,33 +256,7 @@ export const Profile = () => {
             </div>
           )}
 
-          {activeTab === 'likes' && (
-            <div className="tab-content">
-              <h3>История лайков</h3>
-              {likedAds.length === 0 ? (
-                <p>Вы ещё не ставили лайки</p>
-              ) : (
-                <div className="ads-grid">
-                  {likedAds.map(ad => (
-                    <div key={ad.id} className="ad-card" onClick={() => navigate(`/ads/${ad.id}`)}>
-                      <div className="ad-image-placeholder">
-                        {ad.images && ad.images.length > 0 ? (
-                          <img src={ad.images.find(i => i.main)?.url || ad.images[0].url} alt={ad.title} className="ad-image" />
-                        ) : (
-                          <div className="ad-image-empty">Нет фото</div>
-                        )}
-                        <span className="ad-category-badge">{ad.category?.name}</span>
-                      </div>
-                      <div className="ad-content">
-                        <h3>{ad.title}</h3>
-                        <p className="ad-price-large">{ad.price} {ad.currency}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+
         </div>
       </div>
     </div>
