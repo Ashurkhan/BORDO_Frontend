@@ -14,12 +14,12 @@
             return s.replace(/~and~/g, '&')
           }).join('?');
           window.history.replaceState(null, null,
-              l.pathname.slice(0, l.pathname.length - l.search.length) + decoded + l.hash
+              l.pathname.replace(/\/$/, '') + decoded + l.hash
           );
         }
       }(window.location))
     </script>
-    <script type="module" crossorigin src="/BORDO_Frontend/assets/index-BnBseTaa.js"></script>
+    <script type="module" crossorigin src="/BORDO_Frontend/assets/index-BT3lIqcs.js"></script>
     <link rel="stylesheet" crossorigin href="/BORDO_Frontend/assets/index-CS84ZUbd.css">
   </head>
   <body>
