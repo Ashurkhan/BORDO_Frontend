@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' && !process.env.VITE_RAILWAY ? '/JetiHub_Frontend/' : '/',
+  base: process.env.NODE_ENV === 'production' && !process.env.VITE_RAILWAY ? '/BORDO_Frontend/' : '/',
   plugins: [react()],
   server: {
     proxy: {

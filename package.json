@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Ashurkhan.github.io/JetiHub_Frontend",
+  "homepage": "https://Ashurkhan.github.io/BORDO_Frontend",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

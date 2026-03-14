@@ -53,7 +53,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router basename="/JetiHub_Frontend">
+    <Router basename="/BORDO_Frontend">
       <AuthProvider>
         <AppContent />
       </AuthProvider>
