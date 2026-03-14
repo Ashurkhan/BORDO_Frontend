@@ -16,7 +16,7 @@ export const Login = () => {
   const handleOAuthLogin = () => {
     const backendBase =
       import.meta.env.VITE_BACKEND_BASE_URL ||
-      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'https://bordo-production.up.railway.app');
+      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'https://jetihub-production.up.railway.app');
     window.location.href = `${backendBase}/oauth2/authorization/google`;
   };
 
@@ -35,7 +35,7 @@ export const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-form">
-        <h1>Вход в Bordo</h1>
+        <h1>Вход в JetiHub</h1>
         <p className="auth-subtitle">Интернет-магазин скота</p>
         
         {successMessage && <div className="success-message">{successMessage}</div>}

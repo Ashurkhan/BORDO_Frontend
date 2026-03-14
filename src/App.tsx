@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Header } from './components/Header';
 import { Login } from './components/Login';
@@ -53,7 +53,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/JetiHub_Frontend">
       <AuthProvider>
         <AppContent />
       </AuthProvider>

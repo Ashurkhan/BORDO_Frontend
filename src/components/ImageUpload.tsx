@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { imagesAPI } from '../services/api';
+import { imagesAPI, getImageUrl } from '../services/api';
 import type { ImageResponse } from '../types';
 import '../styles/ImageUpload.css';
 
@@ -107,7 +107,7 @@ export const ImageUpload = ({ adId, onImagesChange, images }: ImageUploadProps) 
           {images.map(image => (
             <div key={image.id} className="image-item">
               <div className="image-wrapper">
-                <img src={image.url} alt="Фото объявления" className="image-preview" />
+                <img src={getImageUrl(image.url)} alt="Фото объявления" className="image-preview" />
                 {image.main && <span className="main-badge">Главное</span>}
               </div>
               <div className="image-actions">

@@ -39,7 +39,7 @@ export const EmailVerificationResult = () => {
     <div className="auth-container">
       <div className="auth-form">
         <h1>{isSuccess ? 'Почта подтверждена' : 'Подтверждение почты'}</h1>
-        <p className="auth-subtitle">Bordo — интернет-магазин скота</p>
+        <p className="auth-subtitle">JetiHub — интернет-магазин скота</p>
 
         {isSuccess ? (
           <>

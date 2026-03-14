@@ -155,7 +155,48 @@
 @media (max-width: 768px) {
   .chat-room-container {
     margin: 0;
-    height: calc(100vh - 60px); /* Adjust based on your header height */
+    height: calc(100svh - 60px); 
     border-radius: 0;
+  }
+
+  .chat-header {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .chat-header-info h2 {
+    font-size: 1.1rem;
+  }
+
+  .messages-list {
+    padding: 1rem;
+  }
+
+  .message-content {
+    max-width: 85%;
+  }
+
+  .message-input-form {
+    padding: 1rem;
+  }
+
+  .message-input-form input {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .message-input-form button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-header-info h2 {
+    font-size: 1rem;
+  }
+
+  .chat-ad-title {
+    font-size: 0.75rem;
   }
 }

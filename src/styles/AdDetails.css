@@ -7,9 +7,9 @@
 .ad-details-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 30px;
   background: white;
-  padding: 30px;
+  padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -276,17 +276,64 @@
 }
 
 @media (max-width: 768px) {
+  .ad-details-page {
+    padding: 10px;
+  }
+
   .ad-details-container {
     grid-template-columns: 1fr;
     gap: 20px;
-    padding: 20px;
+    padding: 15px;
+  }
+
+  .ad-image-placeholder-large {
+    height: 250px;
+  }
+
+  .ad-details-right h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .ad-price-section {
+    padding: 15px;
+  }
+
+  .price-main {
+    font-size: 24px;
   }
 
   .ad-meta-info {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .seller-info {
     flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-image-placeholder-large {
+    height: 200px;
+  }
+
+  .ad-meta-info {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .ad-price-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .price-main {
+    font-size: 24px;
   }
 }

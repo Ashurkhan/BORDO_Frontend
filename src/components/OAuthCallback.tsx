@@ -1,52 +1,60 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
 
 export const OAuthCallback = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { loginWithTokens } = useAuth();
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
-    const search = window.location.search || location.search;
-    const params = new URLSearchParams(search);
-    const token = params.get('token');
-    const refreshToken = params.get('refreshToken');
-    const phoneMissing = params.get('phoneMissing') === 'true';
-
-    if (!token || !refreshToken) {
-      setError('Не удалось получить токены авторизации. Попробуйте войти ещё раз.');
+    // Если AuthContext уже увидел токены и авторизовал нас
+    if (isAuthenticated) {
+      console.log('OAuth Callback - Already authenticated, navigating home...');
+      const params = new URLSearchParams(window.location.search);
+      const phoneMissing = params.get('phoneMissing') === 'true';
+      
+      // Перенаправляем на главную или в профиль
+      setTimeout(() => {
+        navigate(phoneMissing ? '/profile' : '/', { replace: true });
+      }, 300);
       return;
     }
 
-    (async () => {
-      try {
-        await loginWithTokens(token, refreshToken);
-        // если у пользователя нет телефона, сразу отправляем в профиль для дозаполнения
-        if (phoneMissing) {
-          navigate('/profile', { replace: true });
-        } else {
-          navigate('/', { replace: true });
-        }
-      } catch (e) {
-        setError('Ошибка при обработке OAuth-авторизации. Попробуйте снова.');
+    // Если прошло 5 секунд и мы всё еще не вошли - значит что-то не так
+    const timer = setTimeout(() => {
+      if (!isAuthenticated) {
+        setError('Время ожидания входа истекло. Пожалуйста, попробуйте еще раз.');
       }
-    })();
-    // выполняем логику ровно один раз при монтировании
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="auth-container">
-      <div className="auth-form">
-        <h1>Вход через OAuth</h1>
-        <p className="auth-subtitle">Bordo — интернет-магазин скота</p>
-        {error ? (
-          <div className="error-message">{error}</div>
-        ) : (
-          <div className="loading">Завершаем вход, подождите...</div>
+      <div className="auth-form" style={{ maxWidth: '600px', textAlign: 'center' }}>
+        <div className="success-icon">🔑</div>
+        <h1>Авторизация...</h1>
+        <p className="auth-subtitle">
+          {isAuthenticated ? `Привет, ${user?.fullName}! Переходим в приложение...` : 'Связываемся с Google и проверяем данные...'}
+        </p>
+        
+        {error && (
+          <>
+            <div className="error-message">{error}</div>
+            <button className="submit-button" onClick={() => navigate('/login')}>
+              Вернуться к входу
+            </button>
+          </>
+        )}
+
+        {!error && !isAuthenticated && (
+          <div className="loading">
+             <div className="spinner"></div>
+             Пожалуйста, подождите...
+          </div>
         )}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { adsAPI, favoritesAPI, votesAPI, chatAPI } from '../services/api';
+import { adsAPI, favoritesAPI, votesAPI, chatAPI, getImageUrl } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import type { Ad } from '../types';
 import '../styles/AdDetails.css';
@@ -126,7 +126,7 @@ export const AdDetails = () => {
   <div className="ad-image-placeholder-large">
     {selectedImage ? (
       <img
-        src={selectedImage}
+        src={getImageUrl(selectedImage)}
         alt={ad.title}
         className="ad-main-image"
       />
@@ -143,7 +143,7 @@ export const AdDetails = () => {
       ad.images.map((img) => (
         <img 
           key={img.id} 
-          src={img.url} 
+          src={getImageUrl(img.url)} 
           alt={`img-${img.id}`} 
           // Добавляем класс active, если это фото сейчас выбрано
           className={`thumbnail ${selectedImage === img.url ? 'active' : ''}`}

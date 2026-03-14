@@ -71,8 +71,11 @@ export const Header = () => {
     <header className="header">
       <div className="header-container">
         <Link to="/" className="logo">
-          <h1>🐄 Bordo</h1>
-          <p>Интернет-магазин скота</p>
+          <div className="logo-icon">🚀</div>
+          <div className="logo-text">
+            <h1>JetiHub</h1>
+            <p>Интернет-магазин скота</p>
+          </div>
         </Link>
 
         <nav className="nav-menu">

@@ -7,41 +7,67 @@
   top: 0;
   z-index: 100;
   width: 100%;
-  height: 60px;
+  min-height: 60px;
+  height: auto;
 }
 
 .header-container {
-  width: 100%;
-  height: 60px;
-  padding: 0 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 60px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .logo {
   cursor: pointer;
   display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+  animation: shine 3s infinite alternate;
+}
+
+@keyframes shine {
+  from { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)); }
+  to { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+}
+
+.logo-text {
+  display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 140px;
-  flex-shrink: 0;
 }
 
-.logo h1 {
-  font-size: 20px;
-  font-weight: bold;
+.logo-text h1 {
+  font-size: 24px;
+  font-weight: 800;
   margin: 0;
   padding: 0;
+  letter-spacing: -0.5px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.logo p {
-  font-size: 10px;
-  opacity: 0.9;
-  margin: 0;
+.logo-text p {
+  font-size: 11px;
+  opacity: 0.85;
+  margin: -2px 0 0 0;
   padding: 0;
+  font-weight: 500;
 }
 
 .nav-menu {
@@ -137,11 +163,11 @@
     gap: 20px;
   }
 
-  .logo h1 {
+  .logo-text h1 {
     font-size: 20px;
   }
 
-  .logo p {
+  .logo-text p {
     font-size: 10px;
   }
 
@@ -174,20 +200,23 @@
     flex-shrink: 0;
   }
 
-  .logo h1 {
+  .logo-text h1 {
     font-size: 18px;
   }
 
-  .logo p {
+  .logo-text p {
     font-size: 9px;
   }
 
   .nav-menu {
     order: 3;
     width: 100%;
-    gap: 8px;
-    justify-content: flex-start;
+    gap: 5px;
+    justify-content: center;
     flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 5px -12px;
+    padding: 8px 12px;
   }
 
   .nav-link {
@@ -214,30 +243,31 @@
 
 @media (max-width: 480px) {
   .header-container {
-    padding: 6px 10px;
-    gap: 8px;
+    padding: 8px 15px;
+    justify-content: space-between;
   }
 
-  .logo h1 {
-    font-size: 16px;
+  .logo-text h1 {
+    font-size: 18px;
   }
 
-  .logo p {
+  .logo-text p {
     display: none;
   }
 
   .nav-menu {
-    width: 100%;
-    gap: 6px;
+    margin: 5px -15px;
+    padding: 10px 15px;
+    gap: 4px;
   }
 
   .nav-link {
     font-size: 11px;
-    padding: 3px 6px;
+    padding: 4px 6px;
   }
 
   .header-actions {
-    gap: 6px;
+    gap: 8px;
   }
 
   .user-greeting {
@@ -245,10 +275,9 @@
   }
 
   .logout-btn, .login-btn, .register-btn {
-    font-size: 10px;
-    padding: 4px 8px;
+    font-size: 11px;
+    padding: 5px 10px;
   }
-
 }
 
 /* Unread Messages Badge in Header */

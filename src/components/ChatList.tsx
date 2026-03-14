@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { chatAPI, adsAPI } from '../services/api';
+import { chatAPI, adsAPI, getImageUrl } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import type { ChatResponse } from '../types';
 import '../styles/ChatList.css';
@@ -87,7 +87,7 @@ export const ChatList = () => {
                 <div className="chat-card-body">
                   <div className="chat-ad-info">
                     {chat.adImageUrl ? (
-                      <img src={chat.adImageUrl} alt="Ad thumbnail" className="chat-ad-thumb" />
+                      <img src={getImageUrl(chat.adImageUrl)} alt="Ad thumbnail" className="chat-ad-thumb" />
                     ) : (
                       <div className="chat-ad-thumb fallback"></div>
                     )}

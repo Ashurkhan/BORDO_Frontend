@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { adsAPI, categoriesAPI, votesAPI } from '../services/api';
+import { adsAPI, categoriesAPI, votesAPI, getImageUrl } from '../services/api';
 
 import type { Ad, Category } from '../types';
 import '../styles/Ads.css';
@@ -88,7 +88,7 @@ export const AdsList = () => {
   return (
     <div className="ads-page">
       <div className="ads-header">
-        <h1>Bordo - Интернет-магазин скота</h1>
+        <h1>JetiHub - Интернет-магазин скота</h1>
         <p>Найдите лучший скот по лучшим ценам</p>
         <div className="search-box">
           <input
@@ -133,7 +133,7 @@ export const AdsList = () => {
                   <div className="ad-image-placeholder">
                     {ad.images && ad.images.length > 0 ? (
                       <img
-                        src={ad.images.find(i => i.main)?.url || ad.images[0].url}
+                        src={getImageUrl(ad.images.find(i => i.main)?.url || ad.images[0].url)}
                         alt={ad.title}
                         className="ad-image"
                       />

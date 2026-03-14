@@ -23,7 +23,7 @@ import type {
 
 // В dev используем прокси (обход CORS), в prod — полный URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || 
-                     (import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/api` : 'https://bordo-production.up.railway.app/api');
+                     (import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/api` : 'https://jetihub-production.up.railway.app/api');
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -31,6 +31,30 @@ const apiClient: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+export const getImageUrl = (url: string | undefined): string | undefined => {
+  if (!url) return undefined;
+  
+  // Если это полный URL или data-URL, возвращаем как есть
+  if (url.startsWith('http') || url.startsWith('data:')) return url;
+  
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://jetihub-production.up.railway.app';
+  
+  // Если бэкенд возвращает уже полный путь API (например, /api/images/filename.jpg)
+  if (url.startsWith('/api/')) {
+    return `${baseUrl}${url}`;
+  }
+  
+  // Если бэкенд возвращает путь без /api/ (например, /images/filename.jpg)
+  if (url.startsWith('/images/')) {
+    return `${baseUrl}/api${url}`;
+  }
+  
+  // Если это просто имя файла, формируем стандартный путь
+  // Убираем ведущий слеш если он есть, чтобы не было двойного слеша
+  const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+  return `${baseUrl}/api/images/${cleanUrl}`;
+};
 
 // Добавляем accessToken в заголовки если он есть
 apiClient.interceptors.request.use((config) => {

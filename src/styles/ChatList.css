@@ -153,3 +153,40 @@
   font-weight: bold;
   padding: 0 6px;
 }
+@media (max-width: 600px) {
+  .chat-list-container {
+    margin: 1rem auto;
+  }
+
+  .chat-card {
+    padding: 1rem;
+  }
+
+  .chat-card-body {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .chat-ad-info {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .chat-ad-thumb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chat-ad-title {
+    font-size: 13px;
+  }
+
+  .unread-badge {
+    top: 1rem;
+    right: 1rem;
+  }
+}

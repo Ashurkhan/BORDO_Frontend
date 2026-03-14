@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h4>🐄 Bordo</h4>
+          <h4>🚀 JetiHub</h4>
           <p>Интернет-магазин скота и кормов</p>
         </div>
 
@@ -20,7 +20,7 @@ export const Footer = () => {
 
         <div className="footer-section">
           <h4>Контакты</h4>
-          <p>📧 info@bordo.kg</p>
+          <p>📧 info@jetihub.kg</p>
           <p>📱 +996 (700) 01-02-03</p>
         </div>
 
@@ -31,7 +31,7 @@ export const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; 2026 Bordo. Все права защищены.</p>
+        <p>&copy; 2026 JetiHub. Все права защищены.</p>
       </div>
     </footer>
   );

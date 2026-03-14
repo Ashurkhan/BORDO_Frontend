@@ -35,13 +35,14 @@ export const Register = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isRegistered, setIsRegistered] = useState(false);
   const navigate = useNavigate();
   const { register, isLoading } = useAuth();
 
   const handleOAuthRegister = () => {
     const backendBase =
       import.meta.env.VITE_BACKEND_BASE_URL ||
-      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'https://bordo-production.up.railway.app');
+      (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : 'https://jetihub-production.up.railway.app');
     window.location.href = `${backendBase}/oauth2/authorization/google`;
   };
 
@@ -69,14 +70,17 @@ export const Register = () => {
       setError('Введите корректный email');
       return;
     }
-    if(formData.phone.length<13 || formData.phone.length>13){
-      setError('Введите корректный номер телефона как указано в примере');
+    
+    // Бэкенд ожидает ровно 13 символов согласно аннотации @Size(min=13, max=13)
+    // Но также имеет Regex ^\+?[0-9 ]+$
+    if (formData.phone.replace(/\s/g, '').length !== 13) {
+      setError('Введите номер телефона (13 символов, включая +)');
       return;
     }
 
     try {
       await register(formData);
-      navigate('/login', { state: { message: 'Регистрация успешна. Войдите в аккаунт.' } });
+      setIsRegistered(true);
     } catch (err: unknown) {
       const e = err as { response?: { data?: unknown }; message?: string; code?: string };
       const msg = getErrorMessage(e);
@@ -84,10 +88,34 @@ export const Register = () => {
     }
   };
 
+  if (isRegistered) {
+    return (
+      <div className="auth-container">
+        <div className="auth-form success-step">
+          <div className="success-icon">✉️</div>
+          <h1>Аккаунт создан!</h1>
+          <p className="auth-subtitle">
+            Мы отправили письмо для подтверждения на <strong>{formData.email}</strong>.
+          </p>
+          <div className="info-box">
+            Пожалуйста, перейдите по ссылке в письме, чтобы активировать свой аккаунт. 
+            После этого вы сможете войти в систему.
+          </div>
+          <button className="submit-button" onClick={() => navigate('/login')}>
+            Перейти к входу
+          </button>
+          <p className="auth-link">
+            Не получили письмо? <Link to="/email-verification">Отправить повторно</Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="auth-container">
       <div className="auth-form">
-        <h1>Регистрация в Bordo</h1>
+        <h1>Регистрация в JetiHub</h1>
         <p className="auth-subtitle">Присоединяйтесь к нашему сообществу</p>
         
         {error && <div className="error-message">{error}</div>}
@@ -115,8 +143,9 @@ export const Register = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="+996 (700) 11-11-11"
+              placeholder="+996700111222"
             />
+            <small className="form-hint">Пример: +996700111222 (13 символов)</small>
           </div>
 
           <div className="form-group">

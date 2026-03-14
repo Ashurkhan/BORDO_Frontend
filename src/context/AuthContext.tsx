@@ -39,6 +39,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const initAuth = async () => {
+      // 1. Проверяем URL на наличие токенов (для OAuth редиректа на любую страницу)
+      const search = window.location.search;
+      if (search) {
+        const params = new URLSearchParams(search);
+        let token = params.get('token');
+        let refreshToken = params.get('refreshToken');
+
+        // Проверка "хакнутого" формата GH Pages: ?/path&token=...
+        if (!token && search.startsWith('?/')) {
+          const parts = search.split('&');
+          parts.forEach(p => {
+            if (p.startsWith('token=')) token = p.split('=')[1];
+            if (p.startsWith('refreshToken=')) refreshToken = p.split('=')[1];
+          });
+        }
+
+        if (token && refreshToken) {
+          console.log('AuthContext - Detected tokens in URL, saving...');
+          saveAuth(token, refreshToken);
+          // Очищаем URL от токенов для безопасности и красоты
+          const newUrl = window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, newUrl);
+        }
+      }
+
       const accessToken = localStorage.getItem('accessToken');
       if (!accessToken) {
         setIsLoading(false);
@@ -51,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const res = await usersAPI.me();
         setUser(res.data as User);
       } catch {
-        // если профиль по каким-то причинам не загрузился, оставляем данные из токена
         setUser(baseUser);
       } finally {
         setIsLoading(false);

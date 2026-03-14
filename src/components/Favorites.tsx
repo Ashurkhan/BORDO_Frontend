@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { favoritesAPI } from '../services/api';
+import { favoritesAPI, getImageUrl } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import type { Ad } from '../types';
 import '../styles/Favorites.css';
@@ -60,7 +60,7 @@ export const Favorites = () => {
               <div className="ad-image-placeholder">
                 {ad.images && ad.images.length > 0 ? (
                   <img
-                    src={ad.images.find(i => i.main)?.url || ad.images[0].url}
+                    src={getImageUrl(ad.images.find(i => i.main)?.url || ad.images[0].url)}
                     alt={ad.title}
                     className="ad-image"
                   />

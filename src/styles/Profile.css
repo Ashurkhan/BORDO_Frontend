@@ -53,10 +53,10 @@
 
 .profile-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 20px 0;
-  padding: 20px 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+  padding: 15px 0;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
 }
@@ -281,27 +281,60 @@
 @media (max-width: 768px) {
   .profile-container {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .profile-sidebar {
     position: static;
+    padding: 20px;
+    top: 0;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
   }
 
   .user-ad-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
+    padding: 12px;
   }
 
   .user-ad-actions {
     width: 100%;
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
   }
 
   .edit-btn, .delete-btn {
     flex: 1;
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-tabs {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    border-left: 3px solid transparent;
+    text-align: left;
+  }
+  
+  .tab-button.active {
+    border-bottom-color: #eee;
+    border-left-color: #667eea;
+  }
+  
+  .tab-content {
+    padding: 20px 15px;
   }
 }
